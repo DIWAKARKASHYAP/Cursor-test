@@ -1,6 +1,6 @@
 # Tideway
 
-A focused Next.js landing page ready to deploy on Vercel.
+A Next.js operations dashboard ready to deploy on Vercel.
 
 ## Stack
 

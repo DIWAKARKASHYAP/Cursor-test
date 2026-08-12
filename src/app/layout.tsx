@@ -15,9 +15,9 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Tideway — Ship calm, clear product",
+  title: "Tideway Dashboard",
   description:
-    "Tideway is a focused Next.js starter, ready to deploy on Vercel.",
+    "Operations dashboard for monitoring deployments, traffic, and workspace health.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
