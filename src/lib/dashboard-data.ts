@@ -115,6 +115,7 @@ export const deployments: DeploymentRow[] = [
 
 export const navItems = [
   { label: "Overview", href: "#overview", active: true },
+  { label: "Integrations", href: "#integrations", active: false },
   { label: "Deployments", href: "#deployments", active: false },
   { label: "Analytics", href: "#analytics", active: false },
   { label: "Settings", href: "#settings", active: false },
