@@ -1,5 +1,6 @@
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import { DeploymentsTable } from "@/components/dashboard/deployments-table";
+import { InstagramConnect } from "@/components/dashboard/instagram-connect";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { StatCardView } from "@/components/dashboard/stat-card";
 import { TrafficChart } from "@/components/dashboard/traffic-chart";
@@ -50,6 +51,10 @@ export default function Home() {
             {stats.map((stat) => (
               <StatCardView key={stat.label} stat={stat} />
             ))}
+          </section>
+
+          <section className="mt-6">
+            <InstagramConnect />
           </section>
 
           <section className="mt-6 grid gap-6 xl:grid-cols-[1.4fr_0.9fr]">
