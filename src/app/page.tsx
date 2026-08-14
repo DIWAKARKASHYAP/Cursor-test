@@ -14,7 +14,7 @@ export default function Home() {
             </h1>
           </div>
             <p className="hidden max-w-sm text-right text-sm text-ink-soft sm:block">
-              Enter monthly amount, years, and average return to see money after each year.
+              Enter monthly amount in rupees, years, and average return to see money after each year.
             </p>
         </div>
       </header>

@@ -1,6 +1,6 @@
 # invest_calculator
 
-Type a monthly investment amount, how many years you will invest, and the average return per year. The app shows how much money you get after each year.
+Type a monthly investment amount in rupees, how many years you will invest, and the average return per year. The app shows how much money you get after each year.
 
 ## Inputs
 

@@ -5,7 +5,7 @@ import { calculateInvestment } from "@/lib/calculate";
 import { formatCurrency, formatPercent } from "@/lib/format";
 import { ProjectionTable } from "@/components/calculator/projection-table";
 
-const DEFAULT_MONTHLY = "500";
+const DEFAULT_MONTHLY = "5000";
 const DEFAULT_YEARS = "10";
 const DEFAULT_RATE = "8";
 
@@ -42,7 +42,7 @@ export function InvestmentCalculator() {
               Enter your plan
             </h2>
             <p className="mt-1 text-sm text-ink-soft">
-              Type the monthly amount, years, and average return.
+              Type the monthly amount in rupees, years, and average return.
             </p>
           </div>
           <button
@@ -60,22 +60,22 @@ export function InvestmentCalculator() {
               Monthly investment amount
             </label>
             <p className="mt-1 text-xs text-ink-soft">
-              How much you will put in every month
+              How much you will put in every month, in rupees
             </p>
             <div className="relative mt-2">
               <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
-                $
+                ₹
               </span>
               <input
                 id="monthly-input"
                 type="number"
                 inputMode="decimal"
                 min={0}
-                step={50}
-                placeholder="500"
+                step={100}
+                placeholder="5000"
                 value={monthly}
                 onChange={(event) => setMonthly(event.target.value)}
-                className="w-full rounded-xl border border-mist bg-foam py-3 pl-7 pr-3 text-base text-ink outline-none transition-colors focus:border-tide"
+                className="w-full rounded-xl border border-mist bg-foam py-3 pl-8 pr-3 text-base text-ink outline-none transition-colors focus:border-tide"
               />
             </div>
           </div>
