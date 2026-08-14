@@ -3,11 +3,13 @@ export type CalculatorInputs = {
   monthlyContribution: number;
   annualRatePercent: number;
   years: number;
+  withdrawYears?: number;
   annualContributionIncreasePercent: number;
 };
 
 export type YearProjection = {
   year: number;
+  contributing: boolean;
   contributionsThisYear: number;
   interestThisYear: number;
   endingBalance: number;
@@ -18,6 +20,9 @@ export type CalculatorResult = {
   futureValue: number;
   totalContributed: number;
   totalInterest: number;
+  contributeYears: number;
+  withdrawYears: number;
+  valueWhenContributionsStop: number | null;
   years: YearProjection[];
 };
 
@@ -31,7 +36,19 @@ function roundCents(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-export function sanitizeInputs(inputs: CalculatorInputs): CalculatorInputs {
+export function sanitizeInputs(inputs: CalculatorInputs): CalculatorInputs & {
+  contributeYears: number;
+  withdrawYears: number;
+} {
+  const contributeYears = Math.min(
+    60,
+    Math.max(1, Math.round(isFiniteNumber(inputs.years) ? inputs.years : 1)),
+  );
+  const requestedWithdraw = isFiniteNumber(inputs.withdrawYears)
+    ? Math.round(inputs.withdrawYears)
+    : contributeYears;
+  const withdrawYears = Math.min(60, Math.max(contributeYears, requestedWithdraw));
+
   return {
     principal: Math.max(0, isFiniteNumber(inputs.principal) ? inputs.principal : 0),
     monthlyContribution: Math.max(
@@ -42,10 +59,9 @@ export function sanitizeInputs(inputs: CalculatorInputs): CalculatorInputs {
       50,
       Math.max(0, isFiniteNumber(inputs.annualRatePercent) ? inputs.annualRatePercent : 0),
     ),
-    years: Math.min(
-      60,
-      Math.max(1, Math.round(isFiniteNumber(inputs.years) ? inputs.years : 1)),
-    ),
+    years: contributeYears,
+    withdrawYears,
+    contributeYears,
     annualContributionIncreasePercent: Math.min(
       20,
       Math.max(
@@ -65,12 +81,15 @@ export function calculateInvestment(rawInputs: CalculatorInputs): CalculatorResu
 
   let balance = inputs.principal;
   let totalContributed = inputs.principal;
+  let valueWhenContributionsStop: number | null = null;
   const years: YearProjection[] = [];
 
-  for (let year = 1; year <= inputs.years; year += 1) {
+  for (let year = 1; year <= inputs.withdrawYears; year += 1) {
     const startBalance = balance;
-    const monthlyContribution =
-      inputs.monthlyContribution * (1 + contributionGrowth) ** (year - 1);
+    const contributing = year <= inputs.contributeYears;
+    const monthlyContribution = contributing
+      ? inputs.monthlyContribution * (1 + contributionGrowth) ** (year - 1)
+      : 0;
     let contributionsThisYear = 0;
 
     for (let month = 0; month < MONTHS_PER_YEAR; month += 1) {
@@ -80,11 +99,18 @@ export function calculateInvestment(rawInputs: CalculatorInputs): CalculatorResu
       balance *= 1 + monthlyRate;
     }
 
+    const endingBalance = roundCents(balance);
+
+    if (year === inputs.contributeYears) {
+      valueWhenContributionsStop = endingBalance;
+    }
+
     years.push({
       year,
+      contributing,
       contributionsThisYear: roundCents(contributionsThisYear),
       interestThisYear: roundCents(balance - startBalance - contributionsThisYear),
-      endingBalance: roundCents(balance),
+      endingBalance,
       totalContributed: roundCents(totalContributed),
     });
   }
@@ -96,6 +122,10 @@ export function calculateInvestment(rawInputs: CalculatorInputs): CalculatorResu
     futureValue,
     totalContributed: contributed,
     totalInterest: roundCents(futureValue - contributed),
+    contributeYears: inputs.contributeYears,
+    withdrawYears: inputs.withdrawYears,
+    valueWhenContributionsStop:
+      inputs.withdrawYears > inputs.contributeYears ? valueWhenContributionsStop : null,
     years,
   };
 }

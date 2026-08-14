@@ -14,7 +14,7 @@ export default function Home() {
             </h1>
           </div>
             <p className="hidden max-w-sm text-right text-sm text-ink-soft sm:block">
-              Enter monthly amount to project money, or start and end amounts to find yearly return %.
+              Enter monthly amount to project money, including stop investing then withdraw later.
             </p>
         </div>
       </header>

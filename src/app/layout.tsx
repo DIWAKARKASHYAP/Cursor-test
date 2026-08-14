@@ -17,7 +17,7 @@ const syne = Syne({
 export const metadata: Metadata = {
   title: "invest_calculator",
   description:
-    "Investment calculator in rupees for compound growth, monthly contributions, and year-by-year projections.",
+    "Investment calculator in rupees for monthly investing, stop-then-grow plans, and year-by-year projections.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

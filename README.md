@@ -5,8 +5,11 @@ Type a monthly investment in rupees to see how much money you get, or type start
 ## Find money you get
 
 - Monthly investment amount (Rs.)
-- Time period in years
+- Stop investing after (years)
+- Withdraw at (years)
 - Average return per year
+
+You can invest for 10 years and withdraw at year 17. After you stop putting money in, the amount keeps growing.
 
 ## Find yearly return %
 

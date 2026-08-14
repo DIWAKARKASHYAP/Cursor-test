@@ -7,6 +7,7 @@ import { ProjectionTable } from "@/components/calculator/projection-table";
 
 const DEFAULT_MONTHLY = "5000";
 const DEFAULT_YEARS = "10";
+const DEFAULT_WITHDRAW_YEARS = "17";
 const DEFAULT_RATE = "8";
 const DEFAULT_START = "100000";
 const DEFAULT_END = "200000";
@@ -63,10 +64,53 @@ function RupeeAmountField({
   );
 }
 
+function YearField({
+  id,
+  label,
+  hint,
+  value,
+  onChange,
+  placeholder,
+}: {
+  id: string;
+  label: string;
+  hint: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-ink">
+        {label}
+      </label>
+      <p className="mt-1 text-xs text-ink-soft">{hint}</p>
+      <div className="relative mt-2">
+        <input
+          id={id}
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={60}
+          step={1}
+          placeholder={placeholder}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="w-full rounded-xl border border-mist bg-foam px-3 py-3 pr-16 text-base text-ink outline-none transition-colors focus:border-tide"
+        />
+        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+          years
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export function InvestmentCalculator() {
   const [mode, setMode] = useState<Mode>("future");
   const [monthly, setMonthly] = useState(DEFAULT_MONTHLY);
   const [years, setYears] = useState(DEFAULT_YEARS);
+  const [withdrawYears, setWithdrawYears] = useState(DEFAULT_WITHDRAW_YEARS);
   const [rate, setRate] = useState(DEFAULT_RATE);
   const [startAmount, setStartAmount] = useState(DEFAULT_START);
   const [endAmount, setEndAmount] = useState(DEFAULT_END);
@@ -77,6 +121,7 @@ export function InvestmentCalculator() {
     monthlyContribution: parseAmount(monthly),
     annualRatePercent: parseAmount(rate),
     years: parseAmount(years),
+    withdrawYears: parseAmount(withdrawYears),
     annualContributionIncreasePercent: 0,
   });
 
@@ -90,6 +135,7 @@ export function InvestmentCalculator() {
     if (mode === "future") {
       setMonthly(DEFAULT_MONTHLY);
       setYears(DEFAULT_YEARS);
+      setWithdrawYears(DEFAULT_WITHDRAW_YEARS);
       setRate(DEFAULT_RATE);
       return;
     }
@@ -135,7 +181,7 @@ export function InvestmentCalculator() {
                   Enter your plan
                 </h2>
                 <p className="mt-1 text-sm text-ink-soft">
-                  Type the monthly amount in rupees, years, and average return.
+                  Invest monthly, then optionally stop and withdraw later.
                 </p>
               </div>
               <button
@@ -157,31 +203,36 @@ export function InvestmentCalculator() {
                 placeholder="5000"
               />
 
-              <div>
-                <label htmlFor="years-input" className="text-sm font-medium text-ink">
-                  Time period
-                </label>
-                <p className="mt-1 text-xs text-ink-soft">
-                  How many years you will keep investing
+              <YearField
+                id="years-input"
+                label="Stop investing after"
+                hint="How many years you will keep putting money in"
+                value={years}
+                placeholder="10"
+                onChange={(value) => {
+                  setYears(value);
+                  const invest = Number(value);
+                  const withdraw = Number(withdrawYears);
+                  if (Number.isFinite(invest) && Number.isFinite(withdraw) && invest > withdraw) {
+                    setWithdrawYears(value);
+                  }
+                }}
+              />
+              <YearField
+                id="withdraw-years-input"
+                label="Withdraw at"
+                hint="Year when you take the money out. After you stop investing, it keeps growing."
+                value={withdrawYears}
+                placeholder="17"
+                onChange={setWithdrawYears}
+              />
+              {parseAmount(withdrawYears) > 0 &&
+              parseAmount(withdrawYears) < futureResult.contributeYears ? (
+                <p className="text-xs text-ink-soft">
+                  Withdrawal cannot be earlier than when you stop investing. Using year{" "}
+                  {futureResult.contributeYears}.
                 </p>
-                <div className="relative mt-2">
-                  <input
-                    id="years-input"
-                    type="number"
-                    inputMode="numeric"
-                    min={1}
-                    max={60}
-                    step={1}
-                    placeholder="10"
-                    value={years}
-                    onChange={(event) => setYears(event.target.value)}
-                    className="w-full rounded-xl border border-mist bg-foam px-3 py-3 pr-16 text-base text-ink outline-none transition-colors focus:border-tide"
-                  />
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
-                    years
-                  </span>
-                </div>
-              </div>
+              ) : null}
 
               <div>
                 <label htmlFor="rate-input" className="text-sm font-medium text-ink">
@@ -220,8 +271,9 @@ export function InvestmentCalculator() {
               {formatCurrency(futureResult.futureValue)}
             </p>
             <p className="mt-2 text-sm text-ink-soft">
-              After {futureResult.years.length} years at{" "}
-              {formatPercent(parseAmount(rate))} average return.
+              {futureResult.withdrawYears > futureResult.contributeYears
+                ? `Invest for ${futureResult.contributeYears} years, then grow until year ${futureResult.withdrawYears} at ${formatPercent(parseAmount(rate))} average return.`
+                : `After ${futureResult.years.length} years at ${formatPercent(parseAmount(rate))} average return.`}
             </p>
 
             <dl className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -241,6 +293,16 @@ export function InvestmentCalculator() {
                   {formatCurrency(futureResult.totalInterest)}
                 </dd>
               </div>
+              {futureResult.valueWhenContributionsStop != null ? (
+                <div className="rounded-2xl bg-foam px-4 py-3 sm:col-span-2">
+                  <dt className="text-xs font-medium uppercase tracking-wide text-ink-soft">
+                    Money when you stop investing (year {futureResult.contributeYears})
+                  </dt>
+                  <dd className="mt-1 font-[family-name:var(--font-syne)] text-xl font-semibold text-ink">
+                    {formatCurrency(futureResult.valueWhenContributionsStop)}
+                  </dd>
+                </div>
+              ) : null}
             </dl>
           </section>
 
@@ -249,7 +311,7 @@ export function InvestmentCalculator() {
               Money you get after each year (Rupees)
             </h2>
             <p className="mt-1 text-sm text-ink-soft">
-              Each row shows how much you have put in and how much you have at the end of that year.
+              Investing years show monthly deposits. After that, the row is growing only until withdrawal.
             </p>
             <div className="mt-4">
               <ProjectionTable years={futureResult.years} />

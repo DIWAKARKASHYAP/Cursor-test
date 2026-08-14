@@ -12,6 +12,9 @@ export function ProjectionTable({ years }: { years: YearProjection[] }) {
               Year
             </th>
             <th scope="col" className="py-3 pr-4 font-medium">
+              Phase
+            </th>
+            <th scope="col" className="py-3 pr-4 font-medium">
               Invested this year (Rs.)
             </th>
             <th scope="col" className="py-3 pr-4 font-medium">
@@ -31,6 +34,9 @@ export function ProjectionTable({ years }: { years: YearProjection[] }) {
               <th scope="row" className="py-3 pr-4 font-semibold text-ink">
                 {row.year}
               </th>
+              <td className="py-3 pr-4 text-ink-soft">
+                {row.contributing ? "Investing" : "Growing only"}
+              </td>
               <td className="py-3 pr-4 text-ink-soft">
                 {formatCurrency(row.contributionsThisYear)}
               </td>

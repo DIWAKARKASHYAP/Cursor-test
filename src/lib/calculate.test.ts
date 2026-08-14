@@ -20,6 +20,7 @@ describe("sanitizeInputs", () => {
     assert.equal(sanitized.monthlyContribution, 0);
     assert.equal(sanitized.annualRatePercent, 0);
     assert.equal(sanitized.years, 1);
+    assert.equal(sanitized.withdrawYears, 1);
     assert.equal(sanitized.annualContributionIncreasePercent, 0);
   });
 });
@@ -112,6 +113,80 @@ describe("calculateInvestment", () => {
       result.years.at(-1)?.endingBalance,
       result.futureValue,
     );
+  });
+
+  it("stops monthly investing then grows until withdrawal", () => {
+    const result = calculateInvestment({
+      principal: 0,
+      monthlyContribution: 100,
+      annualRatePercent: 0,
+      years: 2,
+      withdrawYears: 4,
+      annualContributionIncreasePercent: 0,
+    });
+
+    assert.equal(result.contributeYears, 2);
+    assert.equal(result.withdrawYears, 4);
+    assert.equal(result.years.length, 4);
+    assert.equal(result.totalContributed, 2_400);
+    assert.equal(result.futureValue, 2_400);
+    assert.equal(result.years[0]?.contributing, true);
+    assert.equal(result.years[1]?.contributing, true);
+    assert.equal(result.years[2]?.contributing, false);
+    assert.equal(result.years[3]?.contributing, false);
+    assert.equal(result.years[2]?.contributionsThisYear, 0);
+    assert.equal(result.years[1]?.endingBalance, result.valueWhenContributionsStop);
+  });
+
+  it("projects 10 years of investing then withdrawal at year 17", () => {
+    const result = calculateInvestment({
+      principal: 0,
+      monthlyContribution: 5000,
+      annualRatePercent: 8,
+      years: 10,
+      withdrawYears: 17,
+      annualContributionIncreasePercent: 0,
+    });
+    const atStop = calculateInvestment({
+      principal: 0,
+      monthlyContribution: 5000,
+      annualRatePercent: 8,
+      years: 10,
+      annualContributionIncreasePercent: 0,
+    });
+
+    assert.equal(result.years.length, 17);
+    assert.equal(result.totalContributed, 600_000);
+    assert.equal(result.contributeYears, 10);
+    assert.equal(result.withdrawYears, 17);
+    assert.equal(result.valueWhenContributionsStop, atStop.futureValue);
+    assert.ok(result.futureValue > atStop.futureValue);
+    assert.equal(result.years[9]?.contributing, true);
+    assert.equal(result.years[10]?.contributing, false);
+    assert.equal(result.years[16]?.contributing, false);
+    assert.equal(result.years[10]?.contributionsThisYear, 0);
+  });
+
+  it("keeps compounding after contributions stop", () => {
+    const afterOneYear = calculateInvestment({
+      principal: 1_000,
+      monthlyContribution: 0,
+      annualRatePercent: 12,
+      years: 1,
+      annualContributionIncreasePercent: 0,
+    });
+    const afterTwoYears = calculateInvestment({
+      principal: 1_000,
+      monthlyContribution: 0,
+      annualRatePercent: 12,
+      years: 1,
+      withdrawYears: 2,
+      annualContributionIncreasePercent: 0,
+    });
+
+    assert.equal(afterTwoYears.years.length, 2);
+    assert.ok(afterTwoYears.futureValue > afterOneYear.futureValue);
+    assert.equal(afterTwoYears.totalContributed, 1_000);
   });
 });
 
