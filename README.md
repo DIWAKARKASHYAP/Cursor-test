@@ -1,19 +1,17 @@
 # invest_calculator
 
-An investment calculator for projecting compound growth from a starting balance and monthly contributions.
+Type a monthly investment amount, how many years you will invest, and the average return per year. The app shows how much money you get after each year.
 
-## Stack
+## Inputs
 
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS
+- Monthly investment amount
+- Time period in years
+- Average return per year
 
-## What it calculates
+## Output
 
-- Future value with monthly compounding
-- Total contributions versus interest earned
-- Optional yearly increase to monthly deposits
-- Year-by-year projection table and growth chart
+- Total money you get
+- Year-by-year table of invested amount and money you have
 
 ## Local development
 

@@ -13,9 +13,9 @@ export default function Home() {
               Investment calculator
             </h1>
           </div>
-          <p className="hidden max-w-sm text-right text-sm text-ink-soft sm:block">
-            Project compound growth from a starting balance and monthly contributions.
-          </p>
+            <p className="hidden max-w-sm text-right text-sm text-ink-soft sm:block">
+              Enter monthly amount, years, and average return to see money after each year.
+            </p>
         </div>
       </header>
 
