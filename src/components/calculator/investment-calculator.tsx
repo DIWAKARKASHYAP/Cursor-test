@@ -57,14 +57,14 @@ export function InvestmentCalculator() {
         <div className="mt-8 space-y-5">
           <div>
             <label htmlFor="monthly-input" className="text-sm font-medium text-ink">
-              Monthly investment amount
+              Monthly investment amount (Rupees)
             </label>
             <p className="mt-1 text-xs text-ink-soft">
-              How much you will put in every month, in rupees
+              How much you will put in every month
             </p>
             <div className="relative mt-2">
-              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
-                ₹
+              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-medium text-ink-soft">
+                Rs.
               </span>
               <input
                 id="monthly-input"
@@ -75,8 +75,11 @@ export function InvestmentCalculator() {
                 placeholder="5000"
                 value={monthly}
                 onChange={(event) => setMonthly(event.target.value)}
-                className="w-full rounded-xl border border-mist bg-foam py-3 pl-8 pr-3 text-base text-ink outline-none transition-colors focus:border-tide"
+                className="w-full rounded-xl border border-mist bg-foam py-3 pl-12 pr-16 text-base text-ink outline-none transition-colors focus:border-tide"
               />
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm text-ink-soft">
+                rupees
+              </span>
             </div>
           </div>
 
@@ -138,7 +141,7 @@ export function InvestmentCalculator() {
         aria-live="polite"
         className="rounded-3xl border border-mist bg-white p-6 shadow-[0_1px_0_rgba(12,31,46,0.04)] md:p-8"
       >
-        <p className="text-sm font-medium text-tide">Money you get</p>
+        <p className="text-sm font-medium text-tide">Money you get (Rupees)</p>
         <p className="mt-2 font-[family-name:var(--font-syne)] text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           {formatCurrency(result.futureValue)}
         </p>
@@ -149,7 +152,7 @@ export function InvestmentCalculator() {
         <dl className="mt-6 grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl bg-foam px-4 py-3">
             <dt className="text-xs font-medium uppercase tracking-wide text-ink-soft">
-              Total invested
+              Total invested (Rupees)
             </dt>
             <dd className="mt-1 font-[family-name:var(--font-syne)] text-xl font-semibold text-ink">
               {formatCurrency(result.totalContributed)}
@@ -157,7 +160,7 @@ export function InvestmentCalculator() {
           </div>
           <div className="rounded-2xl bg-foam px-4 py-3">
             <dt className="text-xs font-medium uppercase tracking-wide text-ink-soft">
-              Interest earned
+              Interest earned (Rupees)
             </dt>
             <dd className="mt-1 font-[family-name:var(--font-syne)] text-xl font-semibold text-ink">
               {formatCurrency(result.totalInterest)}
@@ -168,7 +171,7 @@ export function InvestmentCalculator() {
 
       <section className="rounded-3xl border border-mist bg-white p-6 shadow-[0_1px_0_rgba(12,31,46,0.04)] lg:col-span-2 md:p-8">
         <h2 className="font-[family-name:var(--font-syne)] text-xl font-semibold text-ink">
-          Money you get after each year
+          Money you get after each year (Rupees)
         </h2>
         <p className="mt-1 text-sm text-ink-soft">
           Each row shows how much you have put in and how much you have at the end of that year.

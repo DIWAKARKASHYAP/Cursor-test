@@ -12,16 +12,16 @@ export function ProjectionTable({ years }: { years: YearProjection[] }) {
               Year
             </th>
             <th scope="col" className="py-3 pr-4 font-medium">
-              Invested this year
+              Invested this year (Rs.)
             </th>
             <th scope="col" className="py-3 pr-4 font-medium">
-              Total invested
+              Total invested (Rs.)
             </th>
             <th scope="col" className="py-3 pr-4 font-medium">
-              Interest this year
+              Interest this year (Rs.)
             </th>
             <th scope="col" className="py-3 font-medium">
-              Money you get
+              Money you get (Rs.)
             </th>
           </tr>
         </thead>
