@@ -9,6 +9,10 @@ const WIDTH = 640;
 const HEIGHT = 260;
 const PAD = { top: 16, right: 16, bottom: 36, left: 56 };
 
+function round(value: number): number {
+  return Math.round(value * 10) / 10;
+}
+
 export function GrowthChart({ years }: GrowthChartProps) {
   if (years.length === 0) {
     return null;
@@ -20,14 +24,14 @@ export function GrowthChart({ years }: GrowthChartProps) {
 
   const xForIndex = (index: number) => {
     if (years.length === 1) {
-      return PAD.left + innerWidth / 2;
+      return round(PAD.left + innerWidth / 2);
     }
 
-    return PAD.left + (index / (years.length - 1)) * innerWidth;
+    return round(PAD.left + (index / (years.length - 1)) * innerWidth);
   };
 
   const yForValue = (value: number) =>
-    PAD.top + innerHeight - (value / maxBalance) * innerHeight;
+    round(PAD.top + innerHeight - (value / maxBalance) * innerHeight);
 
   const balancePath = years
     .map((row, index) => `${index === 0 ? "M" : "L"} ${xForIndex(index)} ${yForValue(row.endingBalance)}`)

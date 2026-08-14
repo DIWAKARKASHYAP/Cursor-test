@@ -155,46 +155,53 @@ export function InvestmentCalculator() {
           })}
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={(event) => event.preventDefault()}>
-          {FIELDS.map((field) => (
-            <label key={field.key} className="block">
-              <span className="flex items-baseline justify-between gap-3">
-                <span className="text-sm font-medium text-ink">{field.label}</span>
-                <span className="text-sm font-semibold text-tide-deep">
-                  {field.key === "annualRatePercent" ||
-                  field.key === "annualContributionIncreasePercent"
-                    ? formatPercent(inputs[field.key])
-                    : field.key === "years"
-                      ? `${inputs[field.key]} yrs`
-                      : formatCurrency(inputs[field.key])}
-                </span>
-              </span>
-              <span className="mt-1 block text-xs text-ink-soft">{field.hint}</span>
-              <input
-                type="range"
-                min={field.min}
-                max={field.max}
-                step={field.step}
-                value={inputs[field.key]}
-                onChange={(event) => updateField(field.key, event.target.value)}
-                className="mt-3 w-full accent-tide"
-                aria-valuemin={field.min}
-                aria-valuemax={field.max}
-                aria-valuenow={inputs[field.key]}
-              />
-              <input
-                type="number"
-                inputMode="decimal"
-                min={field.min}
-                max={field.max}
-                step={field.step}
-                value={inputs[field.key]}
-                onChange={(event) => updateField(field.key, event.target.value)}
-                className="mt-2 w-full rounded-xl border border-mist bg-foam px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-tide"
-              />
-            </label>
-          ))}
-        </form>
+        <div className="mt-8 space-y-6">
+          {FIELDS.map((field) => {
+            const rangeId = `${field.key}-range`;
+            const inputId = `${field.key}-input`;
+            const display =
+              field.key === "annualRatePercent" ||
+              field.key === "annualContributionIncreasePercent"
+                ? formatPercent(inputs[field.key])
+                : field.key === "years"
+                  ? `${inputs[field.key]} yrs`
+                  : formatCurrency(inputs[field.key]);
+
+            return (
+              <div key={field.key}>
+                <div className="flex items-baseline justify-between gap-3">
+                  <label htmlFor={inputId} className="text-sm font-medium text-ink">
+                    {field.label}
+                  </label>
+                  <span className="text-sm font-semibold text-tide-deep">{display}</span>
+                </div>
+                <p className="mt-1 text-xs text-ink-soft">{field.hint}</p>
+                <input
+                  id={rangeId}
+                  type="range"
+                  min={field.min}
+                  max={field.max}
+                  step={field.step}
+                  value={inputs[field.key]}
+                  onChange={(event) => updateField(field.key, event.target.value)}
+                  className="mt-3 w-full accent-tide"
+                  aria-label={field.label}
+                />
+                <input
+                  id={inputId}
+                  type="number"
+                  inputMode="decimal"
+                  min={field.min}
+                  max={field.max}
+                  step={field.step}
+                  value={inputs[field.key]}
+                  onChange={(event) => updateField(field.key, event.target.value)}
+                  className="mt-2 w-full rounded-xl border border-mist bg-foam px-3 py-2 text-sm text-ink outline-none transition-colors focus:border-tide"
+                />
+              </div>
+            );
+          })}
+        </div>
       </section>
 
       <div className="space-y-6">

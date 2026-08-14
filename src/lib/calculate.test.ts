@@ -84,6 +84,19 @@ describe("calculateInvestment", () => {
     assert.equal(result.totalContributed, year1 + year2);
   });
 
+  it("matches the default 20-year balanced plan", () => {
+    const result = calculateInvestment({
+      principal: 10_000,
+      monthlyContribution: 500,
+      annualRatePercent: 8,
+      years: 20,
+      annualContributionIncreasePercent: 0,
+    });
+
+    assert.equal(result.futureValue, 345741.64);
+    assert.equal(result.totalContributed, 130000);
+  });
+
   it("produces a projection row for each year", () => {
     const result = calculateInvestment({
       principal: 5_000,
