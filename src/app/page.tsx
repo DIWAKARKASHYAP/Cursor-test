@@ -7,7 +7,7 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5 md:px-8">
           <div>
             <p className="text-sm font-semibold tracking-wide text-tide">
-              invest_calculayor
+              invest_calculator
             </p>
             <h1 className="mt-1 font-[family-name:var(--font-syne)] text-2xl font-semibold tracking-tight text-ink md:text-3xl">
               Investment calculator

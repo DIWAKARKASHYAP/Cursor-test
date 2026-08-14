@@ -15,7 +15,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "invest_calculayor",
+  title: "invest_calculator",
   description:
     "Investment calculator for compound growth, monthly contributions, and year-by-year projections.",
 };

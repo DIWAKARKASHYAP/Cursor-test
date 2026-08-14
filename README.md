@@ -1,4 +1,4 @@
-# invest_calculayor
+# invest_calculator
 
 An investment calculator for projecting compound growth from a starting balance and monthly contributions.
 
