@@ -1,12 +1,25 @@
-# Tideway
+# invest_calculator
 
-A Next.js operations dashboard ready to deploy on Vercel.
+Type a monthly investment in rupees to see how much money you get, or type start amount, end amount, and duration to find yearly return %.
 
-## Stack
+## Find money you get
 
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS
+- Monthly investment amount (Rs.)
+- Stop investing after (years)
+- Withdraw at (years)
+- Average return per year
+
+You can invest for 10 years and withdraw at year 17. After you stop putting money in, the amount keeps growing.
+
+## Find yearly return %
+
+- Start amount (Rs.)
+- End amount (Rs.)
+- Duration in years
+
+This uses compound annual growth rate (CAGR).
+
+Requires Node.js 22 or 24.
 
 ## Local development
 
@@ -17,17 +30,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Tests
+
+```bash
+npm test
+```
+
 ## Production build
 
 ```bash
 npm run build
 npm start
 ```
-
-## Deploy on Vercel
-
-```bash
-npx vercel --prod
-```
-
-Or connect this GitHub repository in the [Vercel dashboard](https://vercel.com/new) and deploy from the branch.
