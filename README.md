@@ -16,6 +16,8 @@ Type a monthly investment in rupees to see how much money you get, or type start
 
 This uses compound annual growth rate (CAGR).
 
+Requires Node.js 22 or 24.
+
 ## Local development
 
 ```bash
