@@ -10,10 +10,10 @@ export function formatCurrency(value: number): string {
   return `Rs. ${rupeeFormatter.format(Math.round(value))}`;
 }
 
-export function formatPercent(value: number): string {
+export function formatPercent(value: number, digits = 1): string {
   if (!Number.isFinite(value)) {
     return "0%";
   }
 
-  return `${value.toFixed(value % 1 === 0 ? 0 : 1)}%`;
+  return `${value.toFixed(value % 1 === 0 && digits <= 1 ? 0 : digits)}%`;
 }

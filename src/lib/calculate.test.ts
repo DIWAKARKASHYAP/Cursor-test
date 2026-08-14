@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { calculateInvestment, sanitizeInputs } from "./calculate.ts";
+import { calculateInvestment, calculateAnnualGrowth, sanitizeInputs } from "./calculate.ts";
 
 function roundToCents(value: number): number {
   return Math.round(value * 100) / 100;
@@ -112,5 +112,44 @@ describe("calculateInvestment", () => {
       result.years.at(-1)?.endingBalance,
       result.futureValue,
     );
+  });
+});
+
+describe("calculateAnnualGrowth", () => {
+  it("returns 0% when start and end amounts are the same", () => {
+    const result = calculateAnnualGrowth({
+      startAmount: 10_000,
+      endAmount: 10_000,
+      years: 5,
+    });
+
+    assert.equal(result.error, null);
+    assert.equal(result.annualGrowthPercent, 0);
+    assert.equal(result.totalGrowthPercent, 0);
+    assert.equal(result.profit, 0);
+  });
+
+  it("finds yearly compound growth from start, end, and duration", () => {
+    const result = calculateAnnualGrowth({
+      startAmount: 100_000,
+      endAmount: 200_000,
+      years: 7,
+    });
+
+    assert.equal(result.error, null);
+    assert.equal(result.annualGrowthPercent, 10.41);
+    assert.equal(result.totalGrowthPercent, 100);
+    assert.equal(result.profit, 100_000);
+  });
+
+  it("requires a start amount greater than 0", () => {
+    const result = calculateAnnualGrowth({
+      startAmount: 0,
+      endAmount: 50_000,
+      years: 3,
+    });
+
+    assert.equal(result.annualGrowthPercent, null);
+    assert.equal(result.error, "Start amount must be greater than 0.");
   });
 });

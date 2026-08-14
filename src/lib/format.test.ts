@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import { formatCurrency } from "./format.ts";
 
 describe("formatCurrency", () => {
-  it("uses the rupee symbol and Indian grouping", () => {
+  it("uses Rs. prefix and Indian grouping", () => {
     assert.equal(formatCurrency(0), "Rs. 0");
     assert.equal(formatCurrency(500), "Rs. 500");
     assert.equal(formatCurrency(12000), "Rs. 12,000");

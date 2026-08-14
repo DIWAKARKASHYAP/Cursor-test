@@ -1,17 +1,20 @@
 # invest_calculator
 
-Type a monthly investment amount in rupees, how many years you will invest, and the average return per year. The app shows how much money you get after each year.
+Type a monthly investment in rupees to see how much money you get, or type start amount, end amount, and duration to find yearly return %.
 
-## Inputs
+## Find money you get
 
-- Monthly investment amount
+- Monthly investment amount (Rs.)
 - Time period in years
 - Average return per year
 
-## Output
+## Find yearly return %
 
-- Total money you get
-- Year-by-year table of invested amount and money you have
+- Start amount (Rs.)
+- End amount (Rs.)
+- Duration in years
+
+This uses compound annual growth rate (CAGR).
 
 ## Local development
 

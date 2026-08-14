@@ -99,3 +99,51 @@ export function calculateInvestment(rawInputs: CalculatorInputs): CalculatorResu
     years,
   };
 }
+
+export type GrowthInputs = {
+  startAmount: number;
+  endAmount: number;
+  years: number;
+};
+
+export type GrowthResult = {
+  annualGrowthPercent: number | null;
+  totalGrowthPercent: number | null;
+  profit: number;
+  years: number;
+  error: string | null;
+};
+
+export function calculateAnnualGrowth(raw: GrowthInputs): GrowthResult {
+  const startAmount = Math.max(
+    0,
+    isFiniteNumber(raw.startAmount) ? raw.startAmount : 0,
+  );
+  const endAmount = Math.max(0, isFiniteNumber(raw.endAmount) ? raw.endAmount : 0);
+  const years = Math.min(
+    60,
+    Math.max(1, Math.round(isFiniteNumber(raw.years) ? raw.years : 1)),
+  );
+  const profit = roundCents(endAmount - startAmount);
+
+  if (startAmount <= 0) {
+    return {
+      annualGrowthPercent: null,
+      totalGrowthPercent: null,
+      profit,
+      years,
+      error: "Start amount must be greater than 0.",
+    };
+  }
+
+  const totalGrowthPercent = ((endAmount - startAmount) / startAmount) * 100;
+  const annualGrowthPercent = ((endAmount / startAmount) ** (1 / years) - 1) * 100;
+
+  return {
+    annualGrowthPercent: Number(annualGrowthPercent.toFixed(2)),
+    totalGrowthPercent: Number(totalGrowthPercent.toFixed(2)),
+    profit,
+    years,
+    error: null,
+  };
+}
