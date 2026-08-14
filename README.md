@@ -1,12 +1,19 @@
-# Tideway
+# invest_calculayor
 
-A Next.js operations dashboard ready to deploy on Vercel.
+An investment calculator for projecting compound growth from a starting balance and monthly contributions.
 
 ## Stack
 
 - Next.js (App Router)
 - TypeScript
 - Tailwind CSS
+
+## What it calculates
+
+- Future value with monthly compounding
+- Total contributions versus interest earned
+- Optional yearly increase to monthly deposits
+- Year-by-year projection table and growth chart
 
 ## Local development
 
@@ -17,17 +24,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Tests
+
+```bash
+npm test
+```
+
 ## Production build
 
 ```bash
 npm run build
 npm start
 ```
-
-## Deploy on Vercel
-
-```bash
-npx vercel --prod
-```
-
-Or connect this GitHub repository in the [Vercel dashboard](https://vercel.com/new) and deploy from the branch.

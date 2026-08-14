@@ -15,9 +15,9 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Tideway Dashboard",
+  title: "invest_calculayor",
   description:
-    "Operations dashboard for monitoring deployments, traffic, and workspace health.",
+    "Investment calculator for compound growth, monthly contributions, and year-by-year projections.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
