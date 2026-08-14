@@ -28,7 +28,7 @@ export type CalculatorResult = {
 
 const MONTHS_PER_YEAR = 12;
 
-function isFiniteNumber(value: number): boolean {
+function isFiniteNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
 
