@@ -102,6 +102,37 @@ body {
   animation: sheen 7s ease-in-out infinite;
 }
 
+@keyframes tray-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scan {
+  0% {
+    top: 22%;
+  }
+  100% {
+    top: 74%;
+  }
+}
+
+.tile-tray {
+  animation: tray-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.scan-line {
+  animation: scan 2.6s ease-in-out infinite alternate;
+}
+
+.ar-root button:focus-visible {
+  outline: 2px solid #e6d3b1;
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -112,7 +143,13 @@ body {
   .animate-rise-delay-2,
   .animate-rise-delay-3,
   .hero-media,
-  .hero-sheen {
+  .hero-sheen,
+  .tile-tray,
+  .scan-line {
     animation: none !important;
+  }
+
+  .scan-line {
+    top: 48%;
   }
 }
