@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Figtree, Syne } from "next/font/google";
 import "./globals.css";
 
@@ -15,9 +15,16 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Tideway Dashboard",
+  title: "AR",
   description:
-    "Operations dashboard for monitoring deployments, traffic, and workspace health.",
+    "Open the camera, point it at a wall, and place tiles on that surface in real time.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#141816",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
