@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Manga & Manhwa History Recovery</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="popup">
+      <header class="popup-header">
+        <img src="icons/icon48.png" alt="" width="32" height="32" />
+        <h1>Manga &amp; Manhwa History Recovery</h1>
+      </header>
+
+      <label class="field" for="quick-search">
+        <span style="display:block;font-size:0.72rem;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em">Quick search</span>
+        <input id="quick-search" type="search" placeholder="Title, slug, or URL…" autocomplete="off" />
+      </label>
+
+      <div class="popup-stats" id="stats">Scanning history…</div>
+
+      <div class="popup-actions">
+        <button type="button" class="primary" id="open-dashboard">Open recovery dashboard</button>
+        <button type="button" id="refresh">Refresh counts</button>
+      </div>
+
+      <div class="popup-error" id="error" hidden></div>
+    </div>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

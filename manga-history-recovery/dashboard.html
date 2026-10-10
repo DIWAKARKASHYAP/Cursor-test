@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Manga & Manhwa History Recovery</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="dash-header">
+        <div>
+          <h1>Manga &amp; Manhwa History Recovery</h1>
+          <p class="subtitle">Local Chrome History scan · offline core · nothing uploaded</p>
+        </div>
+        <button type="button" class="primary" id="btn-refresh">Refresh / rescan</button>
+      </header>
+
+      <div class="toolbar">
+        <div class="field">
+          <label for="filter-query">Search</label>
+          <input id="filter-query" type="search" placeholder="Titles, slugs, URLs…" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="filter-domain">Domain</label>
+          <select id="filter-domain">
+            <option value="">All domains</option>
+            <option value="mangacherri.com">mangacherri.com</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="filter-start">From</label>
+          <input id="filter-start" type="date" />
+        </div>
+        <div class="field">
+          <label for="filter-end">To</label>
+          <input id="filter-end" type="date" />
+        </div>
+        <div class="field">
+          <label for="filter-sort">Sort</label>
+          <select id="filter-sort">
+            <option value="lastVisited">Last visited</option>
+            <option value="title">Title</option>
+            <option value="visitCount">Visit count</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toggles">
+        <label>
+          <input type="checkbox" id="toggle-open" />
+          Show already-open URLs
+        </label>
+        <span id="custom-domain-wrap">
+          <label for="custom-domain">Custom domain</label>
+          <input id="custom-domain" type="text" placeholder="e.g. example.com" style="width:160px;display:inline-block;margin-left:6px" />
+          <button type="button" id="btn-add-domain" class="ghost">Add</button>
+        </span>
+      </div>
+
+      <div class="stats-bar" id="stats-bar">
+        <span>Loading…</span>
+      </div>
+
+      <div id="state" class="state" hidden></div>
+      <div id="series-list" class="series-list" aria-live="polite"></div>
+
+      <p class="privacy-note">
+        History-derived links stay local. Online search opens a search-engine tab only when you click
+        “Search online” — it never replaces your recovered URLs.
+      </p>
+    </main>
+    <script type="module" src="dashboard.js"></script>
+  </body>
+</html>
